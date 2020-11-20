@@ -1,0 +1,39 @@
+
+.searchPanelContainer{
+    
+}
+
+.searchInput{
+    background-color:#fafbfc;
+    border: none;
+    &:focus {
+        border-color:lightgray;
+        box-shadow: 0 0 0 0.1rem rgba(37, 37, 37, 0.25);
+    }
+    &::placeholder {
+        text-align: center;
+   }
+}
+
+.searchIconContainer{
+    background-color:#fafbfcd5;
+    border: none;
+}
+
+@media (min-width: 767px) {
+    .searchPanelContainer{
+        margin-right: 40px;
+    }
+}
+
+@media (min-width: 992px) {
+    .searchPanelContainer{
+        margin-left: 150px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .searchPanelContainer{
+        margin-left: 240px;
+    }
+}

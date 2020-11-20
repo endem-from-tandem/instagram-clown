@@ -1,0 +1,12 @@
+.dropdown-toggle::after {
+    content:none;
+}
+
+.dropdown-toggle{
+    background-color:#FAFBFC;
+    color:gray;
+    border:none;
+    outline: none;
+}
+
+

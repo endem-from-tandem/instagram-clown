@@ -1,0 +1,14 @@
+.postContainer{
+    padding: 0;
+    margin: 35px auto;
+}
+
+@media (min-width: 470px) {
+ 
+}
+
+@media (min-width: 900px){
+    .postContainer{
+        margin:35px 0;
+    }
+}

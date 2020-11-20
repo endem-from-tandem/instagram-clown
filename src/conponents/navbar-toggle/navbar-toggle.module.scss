@@ -1,0 +1,21 @@
+.nav{
+    font-weight: 600;
+}
+
+@media(min-width:992px){
+    .nav{
+        a{
+            background-color: #fafbfcd5;
+            border-radius: 10px;
+            margin-left:5px;
+            &:hover{
+                background-color:#222;
+                color:white !important;
+            }
+            &:focus{
+                box-shadow: 0 0 0 2pt #999;
+            }
+        }
+       
+    }
+}

@@ -1,0 +1,20 @@
+.navbar-toggler-icon {
+   background-image: url(../../img/hamgurger.png) !important
+}
+
+ .navbar-toggler{
+   border: none;
+   filter: grayscale(.75)
+}
+
+.navbar-toggler:focus{
+   box-shadow: 0 0 0 2px #c8c8c8;
+   outline: none;
+}
+
+
+
+.active{
+      background-color: none !important;
+      color: rgba(0,0,0,.5)!important;
+}
