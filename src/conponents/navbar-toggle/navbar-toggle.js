@@ -2,10 +2,11 @@ import React from 'react'
 import _ from './navbar-toggle.module.scss'
 import './navbar-toggle.css'
 
-import { Link } from 'react-router-dom'
-
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import {Link} from 'react-router-dom'
+
+import UserButton from '../navbar-toggle-user'
 
 
 const NavbarToggle = () => {
@@ -20,8 +21,8 @@ const NavbarToggle = () => {
                 </Nav>
                 <Nav className = {_.nav}>
                     <Nav.Link disabled as={Link} to="/messages">Message</Nav.Link>
-                    <Nav.Link disabled as={Link} to="/likes">Likes</Nav.Link>
-                    <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+                    <Nav.Link disabled as={Link} to="/likes">Likes</Nav.Link>  
+                    <UserButton/>
                 </Nav>
             </Navbar.Collapse>
         </React.Fragment>

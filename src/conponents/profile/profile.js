@@ -1,57 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import _ from './profile.module.scss'
 
 import Container from 'react-bootstrap/Container'
 
-
 import ProfileInfo from '../profile-info'
 import ProfileActions from '../profile-actions'
 import ProfileUserDescription from '../profile-user-description'
+import ProfilePosts from '../profile-posts'
+
+import compose from '../../utils/compose'
+import {withFirebaseService, withFirebaseUser} from '../hoc'
+import Loader from '../loader'
 
 
-import img from '../../img/girl.jpeg'
-import img2 from '../../img/boy.jpeg'
+const Profile = ({firebaseService, currentUser, id}) => {
+    const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-const ProfilePosts = () => {
-    return(
-        <div className = {`${_.postsContainer} flex-wrap d-flex`}>
-            <div className = {`${_.postsImgWrapper} `}>
-                <img className = {_.postsImg} src = {img2} alt = 'img'/>    
-            </div>       
-            <div className = {`${_.postsImgWrapper} `}>
-                <img className = {_.postsImg} src = {img} alt = 'img'/>    
-            </div>    
-
-            <div className = {`${_.postsImgWrapper} `}>
-                <img className = {_.postsImg} src = {img2} alt = 'img'/>    
-            </div>       
-            <div className = {`${_.postsImgWrapper} `}>
-                <img className = {_.postsImg} src = {img} alt = 'img'/>    
-            </div>    
-
-          
-        </div>
-    )
-}
-
-
-const Profile = ({short}) => {
+    //get user from db by request adress 
+    useEffect(()=>{
+        firebaseService.getDocFromCollection('users', id)
+        .then((doc)=>{
+            setUser(doc)
+            setLoading(false)
+        })
+        .catch(err=> {
+            setError(err)
+        })
        
+    },[id, currentUser])
+
+    if(loading){return(<Loader/>)}
+
+    if(!user){
+        return ( 
+            <h1 className = 'text-center mt-3'>
+                User not found...
+            </h1>
+        )
+    }
+    
+    const currentUserId = (currentUser)
+     ? currentUser.id 
+     : null
+
     return (
-        <Container 
-          className = {
-            `${_.profileContainer}
-             ${short ? null : 'mt-3'}`
-          }
-        >
-            <ProfileInfo/>
-            <ProfileUserDescription/>
-            <ProfileActions/>
-            {/* show posts/ dont show */}
-            {short ? null : <ProfilePosts/>}
+        <Container className = {`${_.profileContainer} mt-3`}>           
+            <ProfileInfo user ={user}/>
+            <ProfileUserDescription user={user}/>
+            {(id === currentUserId)?<ProfileActions user={user}/>:null}
+            <ProfilePosts user ={user}/>
         </Container>
-        
     )
 }
 
-export default Profile
+export default compose(
+    withFirebaseService(),
+    withFirebaseUser()
+)(Profile)

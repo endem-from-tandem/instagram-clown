@@ -4,37 +4,30 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import Navbar from '../navbar'
 import Profile from '../profile'
 import Home from '../home'
-
-const isAuthenticated = true
+import Loader from '../loader'
 
 const useRoute = (auth) => {
-    if(auth){
+    if(auth === 'prefer'){
         return(
-            <>
-                <Navbar auth ={true}/>
-                <Switch>
-                    <Route path = '/' exact>
-                        <Home auth ={true}/>
-                    </Route>
-                    <Route path = '/profile' exact>
-                        <Profile />
-                    </Route>
-                    <Redirect to = '/'/>
-                </Switch>
-            </>
+            <Loader/>
         )
     }
-    return (
+    return(
         <>
-            <Navbar auth ={false}/>
+            <Navbar auth ={auth}/>
             <Switch>
                 <Route path = '/' exact>
-                    <Home auth ={false}/>
+                    <Home auth ={auth}/>
                 </Route>
+                <Route 
+                  path = '/profile/:id' 
+                  render = {({match}) => <Profile id = {match.params.id}/>}
+                
+                />
                 <Redirect to = '/'/>
             </Switch>
         </>
-    )
+        )
 }
 
 export default useRoute

@@ -1,0 +1,58 @@
+.container{
+    position: relative;
+}
+
+.userButton{
+    width:40px;
+    font-size:0.6em;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.userOptions{
+    border-radius: 3px;
+    top:55px;
+    left:-27px;
+    text-align: center;
+    width:90px;
+    padding: 4px;
+    position: absolute;
+    background-color:white;
+    color:#222;
+    box-shadow: 0 0 3px 1px rgba(165, 165, 165, 0.623);
+}
+
+.profileLink{
+    color:black;
+    &:hover{
+        color:black;
+    }
+}
+
+.lgOptions{
+   
+}
+
+@media (min-width:320px){
+    .lgOptions{
+        margin-left:80px !important;
+    }
+}
+
+@media (min-width:400px){
+    .lgOptions{
+        margin-left:140px !important;
+    }
+}
+
+@media (min-width:720px){
+    .lgOptions{
+        margin-left:250px !important;
+    }
+}
+@media (min-width:750px){
+    .lgOptions{
+        margin-left:0px !important;
+    }
+}
+

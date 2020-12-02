@@ -1,11 +1,12 @@
 .avatar{
     padding: 2px !important;
-    background: linear-gradient(to right, rgb(118, 170, 238), rgb(78, 47, 255));
+    background: linear-gradient(to right, rgb(110, 146, 194), rgb(15, 56, 131));
     border-radius: 20%;
 }
 
 .avatar img{
     border-radius: 20%;
+    object-fit: cover;
 }
 
 .following,

@@ -6,7 +6,9 @@ import Container from 'react-bootstrap/Container'
 import NavbarToggle from './../navbar-toggle'
 import NavbarSearchPanel from './../navbar-search-panel'
 import NavbarBrand from './../navbar-brand'
-import NavbarLogin from '../navbar-login'
+import NavbarLoginModal from '../navbar-login-modal'
+
+import UserButton from '../navbar-toggle-user'
 
 const AppNavbar = ({auth}) => {
     
@@ -18,8 +20,8 @@ const AppNavbar = ({auth}) => {
             <Container className = {_.navbarContainer}>
                 <NavbarBrand />
                 <NavbarSearchPanel/>
-
-                {auth? <NavbarToggle/> : <NavbarLogin/>}
+                {auth?<UserButton inNav = {true} />:null}
+                {auth? <NavbarToggle/> : <NavbarLoginModal/>}
             </Container>
             
         </Navbar>
