@@ -84,13 +84,20 @@ const NavbarLoginModal = ({firebaseService}) => {
               newUser = {...newUser, posts:[], description:''}
               console.log(newUser, 'newUserff')
               //push user to database
-              firebaseService.addUserToFirestore(newUser)
-                .then(()=>{
-                    console.log('user added')
-                })
-                .catch((e)=>{
-                    console.log('error')
-                })
+              firebaseService.getDocFromCollection('users', newUser.id)
+              .then((data)=> {
+                  console.log('data', data)
+                  if(!data){
+                    firebaseService.addUserToFirestore(newUser)
+                    .then(()=>{
+                        console.log('user added')
+                    })
+                    .catch((e)=>{
+                        console.log('error')
+                    })
+                  }
+              })
+             
           })
     }
 

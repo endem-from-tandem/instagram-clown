@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import _ from './profile-info.module.scss'
 
 import default_avatar from '../../img/default_avatar.png'
 
 const ProfileInfo = ({user}) => {
-    const avatar = user.avatar
+    const [avatar, setAvatar] = useState(default_avatar)
+    
+    useEffect(()=>{
+        if(user){
+            setAvatar(user.avatar)
+        }
+    },[user])
+    
     return(
         <div className = {`${_.profileInfo}  d-flex justify-content-center`}>
             <div className = {`${_.followers} p-2 mt-2`}>
