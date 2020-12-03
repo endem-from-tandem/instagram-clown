@@ -15,7 +15,6 @@ const HomeProfile = ({firebaseService, currentUser}) => {
     const [error, setError] = useState(null)
     const [user, setUser] = useState(null)
 
-  
     useEffect(()=>{
         if(!currentUser){
             return
@@ -35,9 +34,13 @@ const HomeProfile = ({firebaseService, currentUser}) => {
   
 
     if(loading){
-        return <Loader/>
+        return(
+        <div className = {`${_.loader} d-none d-lg-block`}  >
+            <Loader/>
+        </div>
+        )
     }
-
+    
     return(
         <div className = {`${_.sidebar} position-fixed  d-none d-lg-block ml-5`}>
             <ProfileInfo user = {user}/>

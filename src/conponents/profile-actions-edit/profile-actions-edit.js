@@ -9,16 +9,15 @@ import {withFirebaseService} from '../hoc'
 
 const EditProfile = ({user, firebaseService}) => {
     
-
     const [form, setForm] = useState({
         name:user.name, description:user.description
     })
     
-    const submitRef =useRef(null)
-
     const changeHandler = e => {
         setForm({...form, [e.target.name]: e.target.value })
     }
+
+    const submitRef =useRef(null)
 
     const saveChanges = (e) => {
         submitRef.current.disabled = true

@@ -1,6 +1,9 @@
 import React, { useRef, useState } from 'react'
+import _ from './navbar-login-modal.module.scss'
 import { Button, Modal, Form } from 'react-bootstrap'
 import {withFirebaseService} from '../hoc'
+
+import firebase from 'firebase'
 
 const NavbarLoginModal = ({firebaseService}) => {
     const [error, setError] = useState(null)
@@ -23,16 +26,19 @@ const NavbarLoginModal = ({firebaseService}) => {
    
     const loginButtonRef = useRef(null)
     const registerButtonRef = useRef(null)
+    const googleButtonRef = useRef(null)
 
     const onSignUp = (e) => {
         setError(null)
         loginButtonRef.current.disabled = true
         registerButtonRef.current.disabled = true
+        googleButtonRef.current.disabled = true
 
         firebaseService.userSignUpWithEmail(form.email, form.password)
           .then(()=> {
               let newUser =firebaseService.getCurrentUser()
               newUser = {...newUser, posts:[], description:''}
+              console.log(newUser, 'newUserff')
               //push user to database
               firebaseService.addUserToFirestore(newUser)
                 .then(()=>{
@@ -46,6 +52,7 @@ const NavbarLoginModal = ({firebaseService}) => {
               setError(e.message)
               loginButtonRef.current.disabled = false
               registerButtonRef.current.disabled = false
+              googleButtonRef.current.disabled = false
           })
     }
 
@@ -54,12 +61,36 @@ const NavbarLoginModal = ({firebaseService}) => {
         e.preventDefault()
         loginButtonRef.current.disabled = true
         registerButtonRef.current.disabled = true
+        googleButtonRef.current.disabled = true
 
         firebaseService.userLoginWithEmail(form.email, form.password)
           .catch(e => {
               setError(e.message)
               loginButtonRef.current.disabled = false
               registerButtonRef.current.disabled = false
+              googleButtonRef.current.disabled = false
+          })
+    }
+
+    const onGoogle = () => {
+        setError(null)
+        loginButtonRef.current.disabled = true
+        registerButtonRef.current.disabled = true
+        googleButtonRef.current.disabled = true
+
+        firebaseService.userSignWithGoogle()
+          .then(result => {
+            let newUser =firebaseService.getCurrentUser()
+              newUser = {...newUser, posts:[], description:''}
+              console.log(newUser, 'newUserff')
+              //push user to database
+              firebaseService.addUserToFirestore(newUser)
+                .then(()=>{
+                    console.log('user added')
+                })
+                .catch((e)=>{
+                    console.log('error')
+                })
           })
     }
 
@@ -118,6 +149,15 @@ const NavbarLoginModal = ({firebaseService}) => {
                       onClick = {onSignUp}
                     >
                         Sign up
+                    </Button>
+
+                    <Button 
+                      ref = {googleButtonRef}
+                      onClick = {onGoogle}
+                      className = {`${_.googleButton}  ml-2 `}
+                      variant = 'null'
+                      
+                    >
                     </Button>
                     <hr/>
                     <div className = 'mt-2 text-danger'>{error}</div>

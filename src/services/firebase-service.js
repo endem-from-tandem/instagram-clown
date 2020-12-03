@@ -1,7 +1,7 @@
 import {db, auth} from '../firebase'
 import firebase from 'firebase'
 export default class FirebaseService{
-    
+     google_provider = new firebase.auth.GoogleAuthProvider();
     // D B
     getDocsFromCollection(collection){
         return db.collection(collection)
@@ -51,6 +51,11 @@ export default class FirebaseService{
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
+    userSignWithGoogle(){
+        return firebase.auth().signInWithPopup(this.google_provider)
+
+    }
+
     addUserToFirestore(user){
         return db.collection("users").doc(user.id).set({
             ...user
@@ -70,6 +75,7 @@ export default class FirebaseService{
     getCurrentUser(){
         const user = firebase.auth().currentUser
         if(user != null){
+            
             const USER = {
                name:user.displayName,
                id:user.uid,

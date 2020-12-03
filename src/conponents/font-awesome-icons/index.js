@@ -5,4 +5,11 @@ import {faCommentDots} from '@fortawesome/free-solid-svg-icons'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {faUser} from '@fortawesome/free-solid-svg-icons'
 import {faUserCog} from '@fortawesome/free-solid-svg-icons'
-library.add(faSearch, faHeart, faCommentDots, faEllipsisV, faUser, faUserCog)
+library.add(
+    faSearch,
+    faHeart,
+    faCommentDots,
+    faEllipsisV,
+    faUser,
+    faUserCog
+)

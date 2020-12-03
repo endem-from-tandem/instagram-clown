@@ -4,6 +4,7 @@ import _ from './profile-info.module.scss'
 import default_avatar from '../../img/default_avatar.png'
 
 const ProfileInfo = ({user}) => {
+    const avatar = user.avatar
     return(
         <div className = {`${_.profileInfo}  d-flex justify-content-center`}>
             <div className = {`${_.followers} p-2 mt-2`}>
@@ -11,9 +12,9 @@ const ProfileInfo = ({user}) => {
                 <div className = 'text-muted'>Followers</div>
             </div>
 
-            <div className = {`${_.avatar} mx-2 p-1 `}>
+            <div className = {`${_.avatar} mx-2 `}>
                 <img
-                    src = {default_avatar}              
+                    src = {avatar || default_avatar}              
                     width='72px'
                     height='72px'
                     alt ='avatar'

@@ -2,13 +2,15 @@ import React from 'react'
 import _ from './profile-user-description.module.scss'
 
 const ProfileUserDescrtiption = ({user}) => {
+    const name = (user) ? (user.name || user.email) : null
+    const description = (user) ? user.description : null
     return (
         <div className = {`${_.userDescription} mt-3`}>
             <div className = ' h5 font-weight-bold'>
-                {user.name || user.email}
+                {name}
             </div>
-            <div className = 'text-muted mt-3'>
-                 {user.description}
+            <div className = 'text-muted '>
+                 {description}
                 
             </div>
         </div>
