@@ -13,11 +13,12 @@ const ProfilePosts = () => {
         return <ProfilePost src ={item} key = {idx}/>
     })
 
+    return(null)
+   
     return(
-        <div className = {`${_.postsContainer} flex-wrap mt-4 d-flex`}>
-            {posts}
+        <div className = {`${_.postsContainer} flex-wrap mt-3 d-flex`}>
+            {posts}{posts}
         </div>
-      
     )
 }
 

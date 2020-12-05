@@ -7,9 +7,9 @@ const ProfileInfo = ({user}) => {
     const [avatar, setAvatar] = useState(default_avatar)
     
     useEffect(()=>{
-        if(user){
-            setAvatar(user.avatar)
-        }
+        (user)
+            ? setAvatar(user.avatar)
+            : setAvatar(default_avatar)
     },[user])
     
     return(

@@ -80,13 +80,11 @@ const NavbarLoginModal = ({firebaseService}) => {
 
         firebaseService.userSignWithGoogle()
           .then(result => {
-            let newUser =firebaseService.getCurrentUser()
+              let newUser =firebaseService.getCurrentUser()
               newUser = {...newUser, posts:[], description:''}
-              console.log(newUser, 'newUserff')
               //push user to database
               firebaseService.getDocFromCollection('users', newUser.id)
               .then((data)=> {
-                  console.log('data', data)
                   if(!data){
                     firebaseService.addUserToFirestore(newUser)
                     .then(()=>{

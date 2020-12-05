@@ -4,3 +4,24 @@
     min-width:100px;
     font-weight: 500;
 }
+
+.addPostButton{
+   outline:none !important;
+   border:none;
+   background-color: #FAFBFC;
+   border-radius: 10px;
+   width:79px;
+   height:79px;
+   font-size: 2.9em;
+   padding: 0;
+   margin: 0;
+
+   &:hover{
+       color:#0275d8 ;
+   }
+}
+
+.addPostButtonAnim{
+    transform: rotate(45deg);
+    transition-duration: 0.5s;
+}

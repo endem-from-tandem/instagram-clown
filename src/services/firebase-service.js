@@ -1,8 +1,17 @@
 import {db, auth} from '../firebase'
 import firebase from 'firebase'
 export default class FirebaseService{
-     google_provider = new firebase.auth.GoogleAuthProvider();
-    // D B
+    
+    //auth
+    google_provider = new firebase.auth.GoogleAuthProvider();
+    
+    //storage
+    // Points to the root reference
+    storageRef = firebase.storage().ref()
+    // Points to 'images'
+    usersRef = this.storageRef.child('users')
+    
+
     getDocsFromCollection(collection){
         return db.collection(collection)
           .get()
@@ -75,7 +84,6 @@ export default class FirebaseService{
     getCurrentUser(){
         const user = firebase.auth().currentUser
         if(user != null){
-            
             const USER = {
                name:user.displayName,
                id:user.uid,

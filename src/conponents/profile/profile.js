@@ -49,7 +49,7 @@ const Profile = ({firebaseService, currentUser, id}) => {
         <Container className = {`${_.profileContainer} mt-3`}>           
             <ProfileInfo user ={user}/>
             <ProfileUserDescription user={user}/>
-            {(id === currentUserId)?<ProfileActions user={user}/>:null}
+            {(id === currentUserId)?<ProfileActions inProfile={true} user={user}/>:null}
             <ProfilePosts user ={user}/>
         </Container>
     )
