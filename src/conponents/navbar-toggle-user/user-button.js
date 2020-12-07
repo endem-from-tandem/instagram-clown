@@ -77,7 +77,7 @@ const UserButton = ({inNav, firebaseService, currentUser}) => {
                 </Nav.Link>
 
                 <button 
-                className = 'btn btn-dark'
+                className = 'btn text-danger'
                 onClick = {onLogOut}
                 >
                     Log out

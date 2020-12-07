@@ -6,6 +6,7 @@ import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {faUser} from '@fortawesome/free-solid-svg-icons'
 import {faUserCog} from '@fortawesome/free-solid-svg-icons'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
+import {faCheck} from '@fortawesome/free-solid-svg-icons'
 library.add(
     faSearch,
     faHeart,
@@ -13,5 +14,6 @@ library.add(
     faEllipsisV,
     faUser,
     faUserCog,
-    faPlus
+    faPlus,
+    faCheck
 )

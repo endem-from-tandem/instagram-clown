@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import _ from './profile-actions.module.scss'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import Form from 'react-bootstrap/Form'
 
 import EditProfile from '../profile-actions-edit'
+import AddPost from '../profile-actions-addPost'
 
 const ProfileActions = ({user, inProfile}) => {
     const [edit, setEdit] = useState(false)
@@ -41,18 +43,17 @@ const ProfileActions = ({user, inProfile}) => {
             </div>
 
             { inProfile ? 
-            <div >
+            <div className = 'd-flex '>
                 <button 
-                  className = {`${newPostButtonStyle?_.addPostButtonAnim:null} ${_.addPostButton}  font-weight-bold mt-4`}
+                  className = {`${newPostButtonStyle?_.addPostButtonAnim:null} ${_.addPostButton}  font-weight-bold mt-5`}
                   onClick = {showNewPost}
                 >
                     <FontAwesomeIcon icon="plus" />
                 </button>
+                <AddPost newPost ={newPost}/>
             </div>
             : null
             }
-
-            
         </>
     )
 }

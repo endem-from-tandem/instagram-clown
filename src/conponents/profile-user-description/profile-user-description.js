@@ -9,7 +9,7 @@ const ProfileUserDescrtiption = ({user}) => {
             <div className = ' h5 font-weight-bold'>
                 {name}
             </div>
-            <div className = 'text-muted '>
+            <div className = {`${_.description}  text-muted `}>
                  {description}
                 
             </div>

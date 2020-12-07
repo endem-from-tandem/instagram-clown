@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import _ from './profile-actions-edit.module.scss'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ProgressBar from 'react-bootstrap/ProgressBar'
+
 import {withFirebaseService} from '../hoc'
 import firebase from 'firebase'
 
@@ -104,11 +106,22 @@ const EditProfile = ({user, firebaseService}) => {
                 />
             </InputGroup>
             <div className = 'mt-3 mb-1 text-primary font-weight-bold'>Upload avatar:</div>
+            <div className = 'd-flex'>
             <Form.File 
+              className ='mt-2'
               ref = {fileUploadRef} 
               id="exampleFormControlFile1" 
               onChange = {changeFileHadler}
             />
+           
+            <Button 
+                ref = {submitRef}
+                className = 'ml-auto mr-2 pl-4 pr-4 '
+                type = 'submit'
+            >
+                 <FontAwesomeIcon icon = 'check'/>
+            </Button>
+            </div>
             {showProgress
             ?
             <ProgressBar 
@@ -119,17 +132,10 @@ const EditProfile = ({user, firebaseService}) => {
             />
             :null
             }
-            <Button 
-                ref = {submitRef}
-                className = 'mt-4'
-                variant = {'dark'}
-                type = 'submit'
-            >
-                Save changes
-            </Button>
             <div className = 'text-muted mt-2 font-weight-bold'>
-                {notification}
+                {notification} 
             </div>
+         
            
         </Form>
         </div>

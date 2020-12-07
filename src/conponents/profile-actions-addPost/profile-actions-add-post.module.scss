@@ -1,0 +1,23 @@
+.addPostButton{
+    outline:none !important;
+    border:none;
+    background-color: #FAFBFC;
+    border-radius: 10px;
+    width:60px;
+    height:60px;
+    font-size: 2em;
+    padding: 0;
+    margin: 0;
+ 
+    &:hover{
+        color:#0275d8 ;
+    }
+ }
+
+ .addPostFormContainer{
+    width:60%;
+}
+
+.inputFile{
+   
+}
