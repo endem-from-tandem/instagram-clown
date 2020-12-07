@@ -23,7 +23,7 @@ const PostImage = ({payload}) => {
                 src={payload.url}
             />
             </div>
-            <Figure.Caption className =''>
+            <Figure.Caption className ={`${_.postDescription} `}>
                 {payload.description}
             </Figure.Caption>
         </Figure>

@@ -50,7 +50,10 @@ const ProfileActions = ({user, inProfile}) => {
                 >
                     <FontAwesomeIcon icon="plus" />
                 </button>
-                <AddPost newPost ={newPost}/>
+                <AddPost 
+                  user = {user}
+                  newPost = {newPost}
+                />
             </div>
             : null
             }

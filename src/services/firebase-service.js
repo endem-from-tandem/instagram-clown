@@ -5,12 +5,6 @@ export default class FirebaseService{
     //auth
     google_provider = new firebase.auth.GoogleAuthProvider();
     
-    //storage
-    // Points to the root reference
-    storageRef = firebase.storage().ref()
-    // Points to 'images'
-    usersRef = this.storageRef.child('users')
-    
 
     getDocsFromCollection(collection){
         return db.collection(collection)
@@ -75,6 +69,16 @@ export default class FirebaseService{
         return db.collection("users").doc(user.id).update({
             ...updates
         })
+    }
+
+    updateUserPostsInFirestore(user, postId){
+        return db.collection("users").doc(user.id).update({
+            posts: firebase.firestore.FieldValue.arrayUnion(postId)
+        })
+    }
+
+    updatePostsCollection(post){
+        return db.collection('home-posts').doc(post.id).set(post)
     }
 
     userSignOut(){

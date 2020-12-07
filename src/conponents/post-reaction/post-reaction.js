@@ -4,6 +4,7 @@ import _ from './post-reaction.module.scss'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const PostReaction = () => {
+    return(null)
     return (
         <div className ={`${_.postReaction} d-flex`}>
             <div className ='pr-5'>

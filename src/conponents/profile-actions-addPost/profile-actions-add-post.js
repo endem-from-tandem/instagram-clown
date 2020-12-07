@@ -8,10 +8,13 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import {withFirebaseService} from '../hoc'
 import firebase from 'firebase'
 
+import {nanoid} from 'nanoid'
 
-const AddPost = ({newPost, firebaseService}) => {
+
+const AddPost = ({newPost, user, firebaseService}) => {
     const [error, setError] = useState(null)
     const[file, setFile] = useState(null)
+    const[description, setDescription] = useState(null)
     const[notification, setNotification] = useState(null)
     const [progress, setProgress] = useState(0)
     const [showProgress, setShowProgress] = useState(false)
@@ -23,7 +26,9 @@ const AddPost = ({newPost, firebaseService}) => {
         setFile(fileInputRef.current.files[0])
     }
 
-
+    const descriptionChanged = (e) => {
+        setDescription(e.target.value)
+    }
     const addPostButtonClick = () => {
         addPostButtonRef.current.disabled = true
         setError(null)
@@ -33,7 +38,50 @@ const AddPost = ({newPost, firebaseService}) => {
             return   
         }
 
-        //push to firestore
+        //generate id
+        const postId = nanoid()
+        console.log(postId)
+        //push img to storage
+        const postRef = firebase.storage().ref(`${user.id}/posts/${postId}`)
+        const task = postRef.put(file)
+        setShowProgress(true)
+        task.on('state_changed',
+                function progress(snapshot) {
+                    const percentage = 
+                    snapshot.bytesTransferred / snapshot.totalBytes * 100
+                    setProgress(percentage)
+                },
+                function error(err){
+                    console.log('upload avatar error')
+                },
+                async function complete() {
+                    //push postId to firestore user.posts[]
+                    firebaseService.updateUserPostsInFirestore(user, postId)
+                    .then(async()=>{
+                        console.log('post aded to firestore user')
+                        //push post to firestore posts collection
+                        const fileURL = await postRef.getDownloadURL()
+                        const dataPost = new Date()
+                        
+                        const post = {
+                            id:postId,
+                            payload:{
+                                url:fileURL,
+                                description: description
+                            },
+                            author:user,
+                            date: dataPost
+                        }
+                        firebaseService.updatePostsCollection(post)
+                    })
+                    .catch((err)=> {
+                        console.log(err)
+                    })
+
+                    
+                }
+        )
+        
 
     }
 
@@ -58,6 +106,7 @@ const AddPost = ({newPost, firebaseService}) => {
             }
             <Form.Group className = 'mt-3' controlId="exampleForm.ControlTextarea1">
                 <Form.Control
+                  onChange = {descriptionChanged}
                   as="textarea" 
                   placeholder = {'description...'}
                   rows={2} 
