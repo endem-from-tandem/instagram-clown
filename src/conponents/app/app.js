@@ -12,7 +12,6 @@ import {db} from '../../firebase'
 import {FirebaseUserProvider} from '../firebase-user-context'
 
 
-
 const App = ({firebaseService}) => {
     const [auth, setAuth] = useState('prefer')
     const [currentUser, setCurrentUser] = useState(null)

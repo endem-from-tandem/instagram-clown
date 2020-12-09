@@ -7,30 +7,47 @@ import {withFirebaseService} from '../hoc'
 import compose from '../../utils/compose'
 import {homePostsLoaded} from '../../actions'
 import Loader from '../loader'
+import { faBellSlash } from '@fortawesome/free-solid-svg-icons'
 
+import {db} from '../../firebase'
 
-const HomePostsH = (props) => {
-    const [loading, setLoading] = useState(false)
+const HomePostsH = ({firebaseService}) => {
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [posts, setPosts] = useState(props.homePosts)
+   const [posts, setPosts] = useState([])
 
-    const fbs = props.firebaseService
 
-    useEffect(() => {
+
+    useEffect(()=>{
         setLoading(true)
-        fbs.getHomePostsByDate()
-            .then(data => {
-                setPosts(data)
-                setLoading(false)
-            })
-            .catch(err => {
-                setError(err)
-            })
+        //get posts
+        /*firebaseService.getHomePostsByDate()
+        .then(data => {
+            setPosts(data)
+            
+            setMounted(true)
+        })
+        .catch(err => {
+            setError(err)
+        })
+        */
 
-    },[fbs])
+        db.collection('home-posts').onSnapshot(snap => {
+            const home_posts = snap.docs.map(doc => doc.data())
+            setPosts(home_posts)
+            setLoading(false)
+        })
+    },[])
+
 
     if(loading){
         return <Loader/>
+    }
+
+    if(posts.length == 0){
+        return(
+            <h2 className = 'text-muted'>Be first who create a post</h2>
+        )
     }
 
     return(
@@ -39,54 +56,9 @@ const HomePostsH = (props) => {
               key = {idx}
               post = {post}
             />
-        })
+        }) 
     )
 }
-/*
-class HomePosts extends Component{
-  
-    componentDidMount(){
-        const {firebaseService} = this.props
-        firebaseService.getHomePosts()
-          .then((data)=>{
-            this.props.homePostsLoaded(data)
-          })
-          .catch((err) => {
-              throw err
-          })
-    }
 
-    render(){
-        const {homePosts, loading} = this.props
 
-        if(loading){
-            return <Loader/>
-        }
-
-        return(
-
-            homePosts.map((post, idx) => {
-                return <HomePost 
-                  key = {idx}
-                  post = {post}
-                />
-            }
-        ))
-    }
-}
-
-*/
-
-const mapStateToProps = ({homePosts, loading}) => {
-    return {homePosts, loading}
-}
-
-const mapDispatchToProps = {
-    homePostsLoaded
-}
-
-export default
-compose(
-    withFirebaseService(),
-    connect(mapStateToProps, mapDispatchToProps)
-    ) (HomePostsH)
+export default withFirebaseService()(HomePostsH)

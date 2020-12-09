@@ -12,7 +12,7 @@ const HomePost = ({post}) => {
     const {date, author, payload} = post
     return(
         <Container className = {`${_.postContainer}`}>
-            <PostAuthor author={author} date={date} />
+           <PostAuthor author={author} date={date} /> 
             <PostImg  payload = {payload}/>
             <PostReaction/>
         </Container>  

@@ -1,9 +1,3 @@
-.authorAvatar{
-    box-shadow: 0 0 0.2rem 0.01rem rgb(172, 172, 172);
-    height: 34px;
-    width:34px;
-    object-fit: cover;
-}
 
 .authorName{
     line-height: 1;
@@ -14,4 +8,9 @@
 .postDate{
     font-weight: 600;
     font-size: 0.8em;
+}
+
+.navLinkAvatar{
+    margin:0;
+    padding:0
 }

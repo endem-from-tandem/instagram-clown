@@ -39,7 +39,7 @@ const ProfileActions = ({user, inProfile}) => {
             </div>
             
             <div className = {`${edit?null:'d-none'} mt-4`}>
-                <EditProfile user = {user}/>
+                <EditProfile inProfile ={inProfile} user = {user}/>
             </div>
 
             { inProfile ? 

@@ -11,7 +11,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import {withFirebaseService} from '../hoc'
 import firebase from 'firebase'
 
-const EditProfile = ({user, firebaseService}) => {
+const EditProfile = ({user, firebaseService, inProfile}) => {
     
     const [form, setForm] = useState(
         (user)? {name:user.name, description:user.description} :
@@ -81,7 +81,7 @@ const EditProfile = ({user, firebaseService}) => {
     }
 
     return (
-        <div className = {_.editContainer}>
+        <div  className = {inProfile?null:_.homeProfileEditWidth}>
         <Form onSubmit ={saveChanges}>    
             <InputGroup className="mb-2">
                 <InputGroup.Prepend>
