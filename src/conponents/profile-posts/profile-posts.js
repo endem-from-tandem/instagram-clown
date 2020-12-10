@@ -5,22 +5,21 @@ import ProfilePost from '../profile-post'
 import Loader from '../loader'
 import { withFirebaseService } from '../hoc'
 
-import {db} from '../../firebase'
 
 const ProfilePosts = ({firebaseService, user}) => {
-    console.log(user, 'user')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [profilePosts, setProfilePosts] = useState(null)
  
-    
     useEffect(()=>{
-        db.collection('home-posts').orderBy('date', 'desc')
-        .onSnapshot(sn => {
-            setProfilePosts(sn.docs.map(doc => doc.data()))
-            setLoading(false)
-        })
-    },[])
+       async function fetchData(){
+           setLoading(true)
+           const data = await firebaseService.getUserPosts(user)
+           setProfilePosts(data)
+           setLoading(false)
+       }
+       fetchData()
+    },[user])
 
     if(loading){
         return(

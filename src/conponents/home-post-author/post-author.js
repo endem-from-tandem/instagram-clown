@@ -30,7 +30,7 @@ const PostAuthor = ({author, postId, firebaseService, currentUser, date}) => {
             setLoading(false)
         }
         fetchData()
-    },[])
+    },[postId])
     
  
     if(loading){
