@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import _ from './profile-actions-add-post.module.scss'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -15,13 +15,12 @@ const AddPost = ({newPost, user, firebaseService}) => {
     const [error, setError] = useState(null)
     const[file, setFile] = useState(null)
     const[description, setDescription] = useState(null)
-    const[notification, setNotification] = useState(null)
     const [progress, setProgress] = useState(0)
     const [showProgress, setShowProgress] = useState(false)
 
     const addPostButtonRef = useRef(null)
     const fileInputRef = useRef(null)
-
+    
     const fileChanged = () => {
         setFile(fileInputRef.current.files[0])
     }
@@ -42,8 +41,11 @@ const AddPost = ({newPost, user, firebaseService}) => {
         const postId = nanoid()
         console.log(postId)
         //push img to storage
+        const metadata = {
+            contentType: 'image/jpeg',
+        }
         const postRef = firebase.storage().ref(`${user.id}/posts/${postId}`)
-        const task = postRef.put(file)
+        const task = postRef.put(file, metadata)
         setShowProgress(true)
         task.on('state_changed',
                 function progress(snapshot) {
@@ -62,7 +64,6 @@ const AddPost = ({newPost, user, firebaseService}) => {
                         //push post to firestore posts collection
                         const fileURL = await postRef.getDownloadURL()
                         const dataPost = new Date()
-                        
                         const post = {
                             id:postId,
                             payload:{
@@ -73,6 +74,11 @@ const AddPost = ({newPost, user, firebaseService}) => {
                             date: dataPost
                         }
                         firebaseService.updatePostsCollection(post)
+                        setShowProgress(false)
+                        setFile(null)
+                        fileInputRef.current.value = null
+                        addPostButtonRef.current.disabled = false
+                        setDescription('')
                     })
                     .catch((err)=> {
                         console.log(err)

@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import _ from './profile-posts.module.scss'
 
-import img from '../../img/girl.jpeg'
-import img2 from '../../img/boy.jpeg'
-
 import ProfilePost from '../profile-post'
 import Loader from '../loader'
 import { withFirebaseService } from '../hoc'
 
+import {db} from '../../firebase'
 
 const ProfilePosts = ({firebaseService, user}) => {
+    console.log(user, 'user')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [profilePosts, setProfilePosts] = useState(null)
  
+    
     useEffect(()=>{
-       async function fetchData(){
-           const data = await firebaseService.getUserPosts(user)
-           setProfilePosts(data)
-           console.log(data)
-           setLoading(false)
-          
-       }
-       const data = fetchData()
+        db.collection('home-posts').orderBy('date', 'desc')
+        .onSnapshot(sn => {
+            setProfilePosts(sn.docs.map(doc => doc.data()))
+            setLoading(false)
+        })
     },[])
 
     if(loading){

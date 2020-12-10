@@ -13,11 +13,14 @@ import {withFirebaseService, withFirebaseUser} from '../hoc'
 import default_avatar from '../../img/default_avatar.png'
 
 
-const PostAuthor = ({author, firebaseService, currentUser, date}) => {
+const PostAuthor = ({author, postId, firebaseService, currentUser, date}) => {
     const {id} = author
     const [loading, setLoading] = useState(true)
     const [postAuthor, setPostAuthor] = useState(null)
 
+    const deletePost = () => {
+        firebaseService.removePost(postId)
+    }
     useEffect(()=>{
         //get author of post by id
         const fetchData = async () => {
@@ -72,7 +75,7 @@ const PostAuthor = ({author, firebaseService, currentUser, date}) => {
 
                 <Dropdown.Menu>
                     {currentUser? currentUser.id === id?
-                     <Dropdown.Item >Delete</Dropdown.Item>:
+                     <Dropdown.Item onClick = {deletePost} >Delete</Dropdown.Item>:
                      <Dropdown.Item onClick ={() => alert(`Брат, ты что крыса?! `)} >Сomplain</Dropdown.Item> 
                      :null}
                    

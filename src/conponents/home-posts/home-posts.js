@@ -14,32 +14,22 @@ import {db} from '../../firebase'
 const HomePostsH = ({firebaseService}) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-   const [posts, setPosts] = useState([])
-
+    const [posts, setPosts] = useState([])
+    const [mounted, setMounted] =useState(false)
 
 
     useEffect(()=>{
-        setLoading(true)
-        //get posts
-        /*firebaseService.getHomePostsByDate()
-        .then(data => {
-            setPosts(data)
-            
-            setMounted(true)
-        })
-        .catch(err => {
-            setError(err)
-        })
-        */
-
-        db.collection('home-posts').onSnapshot(snap => {
-            const home_posts = snap.docs.map(doc => doc.data())
-            setPosts(home_posts)
+        db.collection('home-posts').orderBy('date', 'desc')
+        .onSnapshot(sn => {
+            console.log(posts)
+            setPosts(sn.docs.map(doc => doc.data()))
             setLoading(false)
         })
     },[])
 
 
+
+    
     if(loading){
         return <Loader/>
     }
@@ -50,13 +40,17 @@ const HomePostsH = ({firebaseService}) => {
         )
     }
 
+    const postItems =  posts.map((post, idx) => {
+        return <HomePost 
+          key = {idx}
+          post = {post}
+        />
+    }) 
+
     return(
-        posts.map((post, idx) => {
-            return <HomePost 
-              key = {idx}
-              post = {post}
-            />
-        }) 
+        <div>
+            {postItems}
+        </div>
     )
 }
 

@@ -9,10 +9,10 @@ import PostReaction from '../post-reaction'
 
 
 const HomePost = ({post}) => {
-    const {date, author, payload} = post
+    const {date, author, payload, id} = post
     return(
         <Container className = {`${_.postContainer}`}>
-           <PostAuthor author={author} date={date} /> 
+           <PostAuthor postId = {id} author={author} date={date} /> 
             <PostImg  payload = {payload}/>
             <PostReaction/>
         </Container>  

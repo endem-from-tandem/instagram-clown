@@ -35,15 +35,6 @@ export default class FirebaseService{
         })
 
     }
-    
-    getHomePostsByDate(){
-        return db.collection('home-posts').orderBy('date',  'desc')
-        .get()
-        .then(snapshot => {
-            const data = snapshot.docs.map(document => ({...document.data(), id:document.id}))
-            return data
-        })
-    }
 
     getUserPosts(user){
         return db.collection('home-posts').where('author.id', '==', user.id).orderBy('date', 'desc')
@@ -53,8 +44,6 @@ export default class FirebaseService{
             return data
         })
     }
-
-
 
     userLoginWithEmail(email, password){
         return auth.signInWithEmailAndPassword(email, password)
@@ -86,9 +75,14 @@ export default class FirebaseService{
             posts: firebase.firestore.FieldValue.arrayUnion(postId)
         })
     }
+    
 
     updatePostsCollection(post){
         return db.collection('home-posts').doc(post.id).set(post)
+    }
+
+    removePost(id){
+        return db.collection('home-posts').doc(id).delete()
     }
 
     userSignOut(){

@@ -37,12 +37,15 @@ const EditProfile = ({user, firebaseService, inProfile}) => {
     const submitRef =useRef(null)
 
     const saveChanges = async (e) => {
+        const metadata = {
+            contentType: 'image/jpeg',
+        }
         setNotification(null)
         submitRef.current.disabled = true
         e.preventDefault()
         if(file){
             const avatarRef = firebase.storage().ref(`${user.id}/_avatar_`)
-            const task = avatarRef.put(file)
+            const task = avatarRef.put(file, metadata)
             setShowProgress(true)
             task.on('state_changed',
                 function progress(snapshot) {
